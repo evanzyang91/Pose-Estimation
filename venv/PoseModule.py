@@ -46,7 +46,17 @@ class poseDetector():
                 posturePercent = 100
             else:
                 posturePercent = (1-(difference/(math.sqrt(math.pow(abs(earx-shoulderx),2)+math.pow(abs(eary-shouldery),2)))))*100
-            print(posturePercent)
+            
+            hipx = self.results.pose_landmarks.landmark[self.mpPose.PoseLandmark.LEFT_HIP.value].x
+            hipy = self.results.pose_landmarks.landmark[self.mpPose.PoseLandmark.LEFT_HIP.value].y
+            
+            difference = abs(hipx-shoulderx)
+            if difference == 0:
+                posturePercent += 100
+            else:
+                posturePercent += (1-(difference/(math.sqrt(math.pow(abs(hipx-shoulderx),2)+math.pow(abs(hipy-shouldery),2)))))*100
+            
+            return posturePercent
         except:
             pass 
         
