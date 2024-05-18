@@ -58,7 +58,7 @@ class poseDetector():
             
             return posturePercent
         except:
-            pass 
+            return 0
         
 def main():
     cap = cv2.VideoCapture('videos/video1.mp4')

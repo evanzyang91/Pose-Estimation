@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import time
 import PoseModule as pm
-from pynput.keyboard import Key, Controller
+import win32com.client as comclt
 
 cap = cv2.VideoCapture(0)
 pTime=0
@@ -19,7 +19,9 @@ while True:
     fps = 1/(cTime-pTime)
     pTime = cTime
     
-    if detector.posture(img):
+    if detector.posture(img)==0:
+        break
+    else:
         sum+= detector.posture(img)
         count += 2
     
@@ -30,15 +32,13 @@ while True:
     
 average = sum/count
 print(average)
-if average > 70:
+if average > 75:
     print("human")
 else:
-    keyboard = Controller()
-    
-    keyboard.press('w')
-    keyboard.release('w')
-    keyboard.press(Key.enter)
-    keyboard.release(Key.enter)
+    wsh= comclt.Dispatch("WScript.Shell")
+    wsh.AppActivate("sketch_may18a") 
+    wsh.SendKeys("w")
+    wsh.SendKeys("{ENTER}")
     print("zombie")
 
 cap.release()
