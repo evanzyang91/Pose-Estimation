@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import time
 import PoseModule as pm
+from pynput.keyboard import Key, Controller
 
 cap = cv2.VideoCapture(0)
 pTime=0
@@ -12,7 +13,7 @@ count=0
 while True:
     success, img = cap.read()
     img = detector.findPose(img)
-    lmList = detector.findPosition(img)
+    #lmList = detector.findPosition(img)
 
     cTime = time.time()
     fps = 1/(cTime-pTime)
@@ -27,6 +28,16 @@ while True:
     if cv2.waitKey(1) == ord('q'):
         break
     
-print(sum/count)
+average = sum/count
+print(average)
+if average > 70:
+    print("human")
+else:
+    keyboard = Controller()
+    
+    keyboard.press('w')
+    keyboard.release('w')
+    print("zombie")
+
 cap.release()
 cv2.destroyAllWindows()
