@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
+import math
 
 class poseDetector():
     
@@ -33,6 +34,22 @@ class poseDetector():
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return lmList
     
+    def posture(self, img, draw=True):
+        try:
+            earx = self.results.pose_landmarks.landmark[self.mpPose.PoseLandmark.LEFT_EAR.value].x
+            eary = self.results.pose_landmarks.landmark[self.mpPose.PoseLandmark.LEFT_EAR.value].y
+            shoulderx = self.results.pose_landmarks.landmark[self.mpPose.PoseLandmark.LEFT_SHOULDER.value].x    
+            shouldery = self.results.pose_landmarks.landmark[self.mpPose.PoseLandmark.LEFT_SHOULDER.value].y  
+            
+            difference = abs(earx-shoulderx)
+            if difference == 0:
+                posturePercent = 100
+            else:
+                posturePercent = (1-(difference/(math.sqrt(math.pow(abs(earx-shoulderx),2)+math.pow(abs(eary-shouldery),2)))))*100
+            print(posturePercent)
+        except:
+            pass 
+        
 def main():
     cap = cv2.VideoCapture('videos/video1.mp4')
     pTime=0
