@@ -37,6 +37,8 @@ else:
     
     keyboard.press('w')
     keyboard.release('w')
+    keyboard.press(Key.enter)
+    keyboard.release(Key.enter)
     print("zombie")
 
 cap.release()
