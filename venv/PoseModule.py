@@ -55,6 +55,8 @@ class poseDetector():
                 posturePercent += 100
             else:
                 posturePercent += (1-(difference/(math.sqrt(math.pow(abs(hipx-shoulderx),2)+math.pow(abs(hipy-shouldery),2)))))*100
+                
+            
             
             return posturePercent
         except:

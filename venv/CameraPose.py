@@ -32,7 +32,7 @@ while True:
     
 average = sum/count
 print(average)
-if average > 75:
+if average > 83:
     print("human")
 else:
     wsh= comclt.Dispatch("WScript.Shell")
